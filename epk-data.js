@@ -31,28 +31,28 @@ export const epkData = {
   },
   gallery: [
     {
-      src: "https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=900&q=80",
-      alt: "Portrait in low red lighting"
+      src: "./assets/gallery/deric-gallery-1.jpg",
+      alt: "Deric standing on city overlook at dusk"
     },
     {
-      src: "https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&w=900&q=80",
-      alt: "Mirror shot with moody styling"
+      src: "./assets/gallery/deric-gallery-4.jpg",
+      alt: "Deric close-up in bedroom scene with soft flash"
     },
     {
-      src: "https://images.unsplash.com/photo-1517230878791-4d28214057c2?auto=format&fit=crop&w=900&q=80",
-      alt: "Intimate room setting portrait"
+      src: "./assets/gallery/deric-gallery-5.jpg",
+      alt: "Deric portrait in bedroom with moody composition"
     },
     {
-      src: "https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80",
-      alt: "Direct eye contact fashion portrait"
+      src: "./assets/gallery/deric-gallery-6.jpg",
+      alt: "Deric in red mesh styling with chain heart visual"
     },
     {
-      src: "https://images.unsplash.com/photo-1516223725307-6f76b9ec8742?auto=format&fit=crop&w=900&q=80",
-      alt: "Soft blur portrait with red tones"
+      src: "./assets/gallery/deric-gallery-7.jpg",
+      alt: "Deric floor portrait with cash and warm tones"
     },
     {
-      src: "https://images.unsplash.com/photo-1517467139951-f5a925c9f9de?auto=format&fit=crop&w=900&q=80",
-      alt: "Minimal black and white styling"
+      src: "./assets/gallery/deric-gallery-8.jpg",
+      alt: "Deric portrait in black crewneck with flash"
     }
   ],
   artisticWorld: {

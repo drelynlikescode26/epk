@@ -13,3 +13,16 @@ All editable content is now imported from [epk-data.js](epk-data.js).
 - Edit `contact` for email, location, and Instagram.
 
 The page in [index.html](index.html) auto-renders from that file using ES module import.
+
+## Local gallery images
+
+Drop your final gallery photos into [assets/gallery](assets/gallery) using these filenames:
+
+- `deric-gallery-1.jpg`
+- `deric-gallery-4.jpg`
+- `deric-gallery-5.jpg`
+- `deric-gallery-6.jpg`
+- `deric-gallery-7.jpg`
+- `deric-gallery-8.jpg`
+
+These are already referenced in [epk-data.js](epk-data.js), so once files are added, the gallery updates automatically.
