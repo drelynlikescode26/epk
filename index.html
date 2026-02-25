@@ -1,11 +1,594 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Deric EPK</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DERIC — Electronic Press Kit</title>
+  <meta name="description" content="Official Electronic Press Kit for Deric, independent R&B artist based in Atlanta.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808;
+      --panel: #111111;
+      --text: #f6f6f6;
+      --muted: #b0b0b0;
+      --accent: #b30f1f;
+      --accent-soft: #7a0b16;
+      --line: rgba(255, 255, 255, 0.12);
+      --max-width: 1120px;
+      --space-section: clamp(3.5rem, 8vw, 7rem);
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.65;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      position: relative;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(1200px 700px at 80% 10%, rgba(179, 15, 31, 0.22), transparent 60%),
+        radial-gradient(900px 600px at 20% 95%, rgba(122, 11, 22, 0.16), transparent 60%);
+    }
+
+    body::after {
+      content: "";
+      pointer-events: none;
+      position: fixed;
+      inset: 0;
+      opacity: 0.08;
+      mix-blend-mode: soft-light;
+      background-image: repeating-radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.35) 0, rgba(255, 255, 255, 0.35) 0.4px, transparent 0.8px, transparent 2.5px);
+      z-index: 2;
+    }
+
+    .wrap {
+      width: min(var(--max-width), 92vw);
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    section {
+      padding: var(--space-section) 0;
+      border-top: 1px solid var(--line);
+    }
+
+    h1, h2, h3, p { margin: 0; }
+
+    h2 {
+      font-size: clamp(1.25rem, 2.1vw, 1.8rem);
+      font-weight: 650;
+      letter-spacing: 0.02em;
+      margin-bottom: 1.4rem;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: clamp(1rem, 1.1vw, 1.06rem);
+    }
+
+    .hero {
+      border-top: 0;
+      padding: 0;
+    }
+
+    .hero-media {
+      min-height: min(92vh, 880px);
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 5rem 1.25rem;
+      isolation: isolate;
+      background:
+        linear-gradient(to bottom, rgba(3, 3, 3, 0.25), rgba(3, 3, 3, 0.72)),
+        linear-gradient(115deg, rgba(179, 15, 31, 0.14), rgba(0, 0, 0, 0.7)),
+        var(--hero-image) center 30% / cover no-repeat;
+    }
+
+    .hero-media::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 42%, transparent 0, rgba(0, 0, 0, 0.75) 70%);
+      z-index: -1;
+    }
+
+    .hero-content {
+      max-width: 820px;
+      display: grid;
+      gap: 1rem;
+      justify-items: center;
+    }
+
+    .name {
+      font-size: clamp(3rem, 11vw, 6.8rem);
+      line-height: 0.95;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: 0 10px 45px rgba(0, 0, 0, 0.7);
+    }
+
+    .role {
+      font-size: clamp(0.96rem, 1.4vw, 1.2rem);
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: #ececec;
+      font-weight: 500;
+    }
+
+    .hero-sub {
+      max-width: 760px;
+      color: #ececec;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+    }
+
+    .tagline {
+      color: #d6d6d6;
+      font-size: 0.96rem;
+      letter-spacing: 0.02em;
+      font-style: italic;
+    }
+
+    .bio {
+      display: grid;
+      gap: 1.2rem;
+      max-width: 860px;
+    }
+
+    .highlights-grid,
+    .services-grid,
+    .gallery-grid {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .highlights-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .metric {
+      background: linear-gradient(165deg, rgba(179, 15, 31, 0.1), rgba(255, 255, 255, 0.01));
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1.1rem 1rem;
+      min-height: 110px;
+      display: flex;
+      align-items: flex-start;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      color: #f2f2f2;
+    }
+
+    .music-block {
+      display: grid;
+      gap: 1.1rem;
+      max-width: 900px;
+    }
+
+    .project-title {
+      color: #ffffff;
+      font-weight: 700;
+      font-size: clamp(1.15rem, 2vw, 1.45rem);
+      margin-bottom: 0.4rem;
+    }
+
+    .embeds {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .embed,
+    .video {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      overflow: hidden;
+      background: #0d0d0d;
+    }
+
+    iframe {
+      width: 100%;
+      display: block;
+      border: 0;
+    }
+
+    .visuals {
+      display: grid;
+      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .gallery-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0d0d0d;
+      aspect-ratio: 4 / 5;
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: contrast(1.02) saturate(0.92) brightness(0.78) sepia(0.1) hue-rotate(-12deg);
+      transform: scale(1.02);
+    }
+
+    .gallery-item::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.65), rgba(179, 15, 31, 0.08));
+    }
+
+    .world-copy {
+      max-width: 860px;
+      display: grid;
+      gap: 1rem;
+    }
+
+    .identities {
+      display: grid;
+      gap: 0.8rem;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .identity,
+    .service {
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .identity h3,
+    .service h3 {
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      margin-bottom: 0.35rem;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      max-width: 860px;
+    }
+
+    .contact {
+      display: grid;
+      gap: 1rem;
+      max-width: 700px;
+    }
+
+    .contact a {
+      color: #ffffff;
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+      padding-bottom: 2px;
+    }
+
+    .contact a:hover,
+    .contact a:focus-visible {
+      border-color: rgba(179, 15, 31, 0.9);
+      color: #ffffff;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      padding: 1.2rem 0 2rem;
+      color: #8d8d8d;
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 1000px) {
+      .highlights-grid,
+      .gallery-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .embeds,
+      .visuals,
+      .identities,
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-media {
+        min-height: 76vh;
+      }
+    }
+  </style>
 </head>
 <body>
-  <h1>Deric EPK</h1>
-  <p>Coming soon.</p>
+  <header class="hero" id="top">
+    <div class="hero-media" id="heroMedia" style="--hero-image: url('https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?auto=format&fit=crop&w=1800&q=80');">
+      <div class="hero-content">
+        <div class="name" id="artistName">DERIC</div>
+        <div class="role" id="artistRole">Independent R&B Artist</div>
+        <p class="hero-sub" id="heroSubheading">Emotionally cinematic, melody-driven R&amp;B rooted in vulnerability and confidence.</p>
+        <p class="tagline" id="heroTagline">“The melodic voice of modern R&amp;B — emotion first, industry ready.”</p>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section id="bio">
+      <div class="wrap bio">
+        <h2>Short Bio</h2>
+        <div id="bioParagraphs">
+          <p>Deric is an Atlanta-based independent R&amp;B artist with more than 20M total streams and over 200 verified credits across writing, performance, and collaborative releases. Formerly signed and now fully independent, he operates with a clear creative and business framework built for long-term growth.</p>
+          <p>His sound evolved from Plug&amp;B roots into elevated modern R&amp;B, blending slower tempos, layered vocals, and intimate songwriting with a confident presence. Deric builds records around melody-first writing and emotional transparency, creating songs that feel personal while remaining commercially focused.</p>
+          <p>With consistent output, proven traction, and a distinct visual language, Deric is building a cohesive artist world designed for both audience connection and industry scalability.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="highlights">
+      <div class="wrap">
+        <h2>Highlights &amp; Credentials</h2>
+        <div class="highlights-grid" id="highlightsGrid">
+          <article class="metric">20M+ Total Streams</article>
+          <article class="metric">200+ Verified Credits</article>
+          <article class="metric">Collaborations with PnB Rock, Fresco Trey, Hurricane Wisdom</article>
+          <article class="metric">Worked with producers from Internet Money &amp; CashMoneyAP</article>
+          <article class="metric">Editorial Playlist Support</article>
+          <article class="metric">Founder of Deric Music</article>
+        </div>
+      </div>
+    </section>
+
+    <section id="music">
+      <div class="wrap music-block">
+        <h2>Music</h2>
+        <div>
+          <p class="project-title" id="projectTitle">Mood Swings &amp; Melodies Vol. 3</p>
+          <p id="projectDescription">A 5–6 track EP marking the transition into elevated R&amp;B — slower tempos, layered melodies, vulnerable storytelling, and the duality of pain and confidence.</p>
+        </div>
+        <div class="embeds">
+          <div class="embed">
+            <iframe id="spotifyEmbed" title="Spotify Player" src="https://open.spotify.com/embed/artist/4gzpq5DPGxSnKTe4SA8HAU?utm_source=generator" height="352" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+          </div>
+          <div class="embed">
+            <iframe id="appleEmbed" title="Apple Music Player" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write" frameborder="0" height="450" style="width:100%;max-width:100%;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/blinding-lights/1499378108?i=1499378117"></iframe>
+          </div>
+        </div>
+        <div class="visuals" id="visualsGrid">
+          <div class="video">
+            <iframe title="Performance Visual 1" height="300" src="https://www.youtube.com/embed/4NRXx6U8ABQ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+          <div class="video">
+            <iframe title="Performance Visual 2" height="300" src="https://www.youtube.com/embed/fHI8X4OXluQ" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gallery">
+      <div class="wrap">
+        <h2>Visual Gallery</h2>
+        <div class="gallery-grid" id="galleryGrid">
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=900&q=80" alt="Portrait in low red lighting" loading="lazy"></figure>
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1501612780327-45045538702b?auto=format&fit=crop&w=900&q=80" alt="Mirror shot with moody styling" loading="lazy"></figure>
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1517230878791-4d28214057c2?auto=format&fit=crop&w=900&q=80" alt="Intimate room setting portrait" loading="lazy"></figure>
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1489515217757-5fd1be406fef?auto=format&fit=crop&w=900&q=80" alt="Direct eye contact fashion portrait" loading="lazy"></figure>
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1516223725307-6f76b9ec8742?auto=format&fit=crop&w=900&q=80" alt="Soft blur portrait with red tones" loading="lazy"></figure>
+          <figure class="gallery-item"><img src="https://images.unsplash.com/photo-1517467139951-f5a925c9f9de?auto=format&fit=crop&w=900&q=80" alt="Minimal black and white styling" loading="lazy"></figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="world">
+      <div class="wrap world-copy">
+        <h2>Artistic World</h2>
+        <p id="worldSummary">Deric’s creative universe is built through layered personas that rotate across songs, visuals, and brand direction — giving each release a distinct emotional lens while keeping the core identity cohesive.</p>
+        <div class="identities" id="identitiesGrid">
+          <article class="identity">
+            <h3>Melody Baby</h3>
+            <p>Emotional melody architect focused on intimacy, vulnerability, and vocal texture.</p>
+          </article>
+          <article class="identity">
+            <h3>Lovechild</h3>
+            <p>Nostalgic storyteller translating memories, heartbreak, and hope into modern records.</p>
+          </article>
+          <article class="identity">
+            <h3>Deric Don</h3>
+            <p>Independent boss presence balancing creative control with strategic execution.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="wrap">
+        <h2>Services / Business</h2>
+        <div class="services-grid" id="servicesGrid">
+          <article class="service">
+            <h3>Songwriting</h3>
+            <p>Melody-forward songwriting for artists seeking emotionally resonant, commercially viable records.</p>
+          </article>
+          <article class="service">
+            <h3>Vocal Features</h3>
+            <p>Selective feature placements aligned with premium R&amp;B and melodic hip-hop aesthetics.</p>
+          </article>
+          <article class="service">
+            <h3>Custom Songs</h3>
+            <p>Tailored songs built around your concept, brand direction, and release goals.</p>
+          </article>
+          <article class="service">
+            <h3>Creative Collaborations</h3>
+            <p>Cross-disciplinary collaborations spanning music, visual campaigns, and live concepts.</p>
+          </article>
+          <article class="service">
+            <h3>Vocal Presets</h3>
+            <p>Brand-aligned digital vocal products engineered for clean, emotional modern R&amp;B delivery.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap contact">
+        <h2>Booking &amp; Business Inquiries</h2>
+        <p>Email: <a id="emailLink" href="mailto:business@dericmusic.com">business@dericmusic.com</a></p>
+        <p id="locationText">Location: Atlanta, GA</p>
+        <p>Instagram: <a id="instagramLink" href="https://instagram.com/dericmusic" target="_blank" rel="noopener noreferrer">@dericmusic</a></p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap" id="footerText">
+      DERIC — Electronic Press Kit
+    </div>
+  </footer>
+  <script type="module">
+    import { epkData } from "./epk-data.js";
+
+    const byId = (id) => document.getElementById(id);
+
+    const artistName = byId("artistName");
+    const artistRole = byId("artistRole");
+    const heroSubheading = byId("heroSubheading");
+    const heroTagline = byId("heroTagline");
+    const heroMedia = byId("heroMedia");
+    const footerText = byId("footerText");
+
+    artistName.textContent = epkData.hero.name;
+    artistRole.textContent = epkData.hero.role;
+    heroSubheading.textContent = epkData.hero.subheading;
+    heroTagline.textContent = `“${epkData.hero.tagline}”`;
+    heroMedia.style.setProperty("--hero-image", `url('${epkData.hero.heroImage}')`);
+    footerText.textContent = `${epkData.hero.name} — Electronic Press Kit`;
+
+    const bioParagraphs = byId("bioParagraphs");
+    bioParagraphs.innerHTML = "";
+    epkData.bio.forEach((paragraph) => {
+      const p = document.createElement("p");
+      p.textContent = paragraph;
+      bioParagraphs.appendChild(p);
+    });
+
+    const highlightsGrid = byId("highlightsGrid");
+    highlightsGrid.innerHTML = "";
+    epkData.highlights.forEach((highlight) => {
+      const item = document.createElement("article");
+      item.className = "metric";
+      item.textContent = highlight;
+      highlightsGrid.appendChild(item);
+    });
+
+    byId("projectTitle").textContent = epkData.music.projectTitle;
+    byId("projectDescription").textContent = epkData.music.projectDescription;
+    byId("spotifyEmbed").src = epkData.music.spotifyEmbed;
+
+    const appleEmbed = byId("appleEmbed");
+    appleEmbed.src = epkData.music.appleEmbed;
+    appleEmbed.height = String(epkData.music.appleEmbedHeight ?? 450);
+
+    const visualsGrid = byId("visualsGrid");
+    visualsGrid.innerHTML = "";
+    epkData.music.youtubeVisuals.forEach((videoUrl, index) => {
+      const container = document.createElement("div");
+      container.className = "video";
+
+      const iframe = document.createElement("iframe");
+      iframe.title = `Performance Visual ${index + 1}`;
+      iframe.height = "300";
+      iframe.src = videoUrl;
+      iframe.loading = "lazy";
+      iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      iframe.allowFullscreen = true;
+
+      container.appendChild(iframe);
+      visualsGrid.appendChild(container);
+    });
+
+    const galleryGrid = byId("galleryGrid");
+    galleryGrid.innerHTML = "";
+    epkData.gallery.forEach((photo) => {
+      const figure = document.createElement("figure");
+      figure.className = "gallery-item";
+
+      const img = document.createElement("img");
+      img.src = photo.src;
+      img.alt = photo.alt;
+      img.loading = "lazy";
+
+      figure.appendChild(img);
+      galleryGrid.appendChild(figure);
+    });
+
+    byId("worldSummary").textContent = epkData.artisticWorld.summary;
+
+    const identitiesGrid = byId("identitiesGrid");
+    identitiesGrid.innerHTML = "";
+    epkData.artisticWorld.personas.forEach((persona) => {
+      const card = document.createElement("article");
+      card.className = "identity";
+
+      const title = document.createElement("h3");
+      title.textContent = persona.name;
+
+      const description = document.createElement("p");
+      description.textContent = persona.description;
+
+      card.appendChild(title);
+      card.appendChild(description);
+      identitiesGrid.appendChild(card);
+    });
+
+    const servicesGrid = byId("servicesGrid");
+    servicesGrid.innerHTML = "";
+    epkData.services.forEach((service) => {
+      const card = document.createElement("article");
+      card.className = "service";
+
+      const title = document.createElement("h3");
+      title.textContent = service.title;
+
+      const description = document.createElement("p");
+      description.textContent = service.description;
+
+      card.appendChild(title);
+      card.appendChild(description);
+      servicesGrid.appendChild(card);
+    });
+
+    const emailLink = byId("emailLink");
+    emailLink.href = `mailto:${epkData.contact.email}`;
+    emailLink.textContent = epkData.contact.email;
+
+    byId("locationText").textContent = `Location: ${epkData.contact.location}`;
+
+    const instagramLink = byId("instagramLink");
+    instagramLink.href = epkData.contact.instagramUrl;
+    instagramLink.textContent = epkData.contact.instagramHandle;
+  </script>
 </body>
 </html>
