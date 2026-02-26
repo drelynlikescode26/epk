@@ -1,4 +1,4 @@
-export const epkData = {
+window.epkData = {
   hero: {
     name: "DERIC",
     role: "Independent R&B and Melodic Hip Hop Artist",

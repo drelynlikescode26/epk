@@ -11,7 +11,7 @@ All editable content is now imported from [epk-data.js](epk-data.js).
 - Edit `gallery` for press photo URLs and alt text.
 - Edit `contact` for email, location, and Instagram.
 
-The page in [index.html](index.html) auto-renders from that file using ES module import.
+The page in [index.html](index.html) auto-renders from that file by loading [epk-data.js](epk-data.js) as a script.
 
 ## Local gallery images
 
