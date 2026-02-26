@@ -6,12 +6,40 @@ export const epkData = {
     tagline: "Built for long term growth and real audience connection.",
     heroImage: "./assets/gallery/deric-gallery-10.png"
   },
-  bio: [
-    "Deric is an Atlanta based independent artist blending modern R&B, melodic hip hop, and pluggnb influences into emotionally driven, melody first records. With over 20 million total streams and more than 200 verified credits across writing and performance, he operates with both creative depth and industry ready execution.",
-    "His breakout record “Go Anthem” has surpassed 2.2 million streams on Spotify, with the official audio and video collectively earning over 250K views on YouTube. His collaboration “Last Forever” with iayze has generated over 560K Spotify streams, expanding his reach within the melodic rap and pluggnb space. Additional records like “Tell Me If It’s Real” continue to reinforce his ability to deliver emotionally resonant music with measurable traction.",
-    "Currently averaging over 40K monthly listeners on Spotify, Deric has evolved from his early pluggnb roots into a more elevated R&B direction, pairing slower tempos, layered vocals, and intimate storytelling with confident presence. His sound lives at the intersection of vulnerability and control, built around melody first songwriting and honest emotional transparency.",
-    "More than chasing trends, Deric is building a scalable artist brand by combining consistent output, visual cohesion, and independent ownership to position himself for long term growth across both R&B and melodic hip hop markets."
-  ],
+  bio: {
+    name: "DERIC",
+    subline: "Atlanta | R&B • Melodic Hip Hop • Pluggnb",
+    sections: [
+      {
+        heading: "The Sound",
+        paragraphs: [
+          "Deric is an Atlanta-based independent artist defining a new intersection of modern R&B and melodic hip hop. Built on a foundation of melody-first songwriting, his music balances the raw vulnerability of early pluggnb with the polished execution of elevated R&B. His current direction pairs slower tempos and layered vocals with intimate, honest storytelling."
+        ]
+      },
+      {
+        heading: "By The Numbers",
+        lines: [
+          "Total Streams: 20M+ across all platforms.",
+          "Monthly Listeners: 40K+ on Spotify.",
+          "Industry Credits: 200+ verified writing and performance credits."
+        ]
+      },
+      {
+        heading: "Key Releases",
+        lines: [
+          "Go Anthem: The breakout single with 2.2M+ Spotify streams and 250K+ combined YouTube views.",
+          "Last Forever (ft. iayze): A core melodic rap collaboration with over 560K streams.",
+          "Tell Me If It’s Real: A standout track reinforcing his traction in the R&B space."
+        ]
+      },
+      {
+        heading: "The Brand & Vision",
+        paragraphs: [
+          "More than just a performer, Deric operates as a founder and owner of his brand. By prioritizing visual cohesion, consistent output, and independent ownership, he is positioned for long-term scalability. His evolution from pluggnb roots into a sophisticated R&B sound marks a move toward a more mature, permanent fixture in the melodic market."
+        ]
+      }
+    ]
+  },
   highlights: [
     "20M+ Total Streams",
     "200+ Verified Credits",

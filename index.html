@@ -149,6 +149,46 @@
       max-width: 860px;
     }
 
+    .bio-header {
+      display: grid;
+      gap: 0.3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .bio-name {
+      color: #ffffff;
+      font-size: clamp(1.15rem, 2vw, 1.5rem);
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .bio-subline {
+      color: #d1d1d1;
+      font-size: 0.96rem;
+      letter-spacing: 0.01em;
+    }
+
+    .bio-section {
+      display: grid;
+      gap: 0.7rem;
+      border-top: 1px solid var(--line);
+      padding-top: 1rem;
+    }
+
+    .bio-section h3 {
+      margin: 0;
+      color: #ffffff;
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+    }
+
+    .bio-lines {
+      display: grid;
+      gap: 0.55rem;
+    }
+
     .highlights-grid,
     .gallery-grid {
       display: grid;
@@ -332,9 +372,10 @@
       <div class="wrap bio">
         <h2>Short Bio</h2>
         <div id="bioParagraphs">
-          <p>Deric is an Atlanta-based independent R&amp;B artist with more than 20M total streams and over 200 verified credits across writing, performance, and collaborative releases. Formerly signed and now fully independent, he operates with a clear creative and business framework built for long-term growth.</p>
-          <p>His sound evolved from Plug&amp;B roots into elevated modern R&amp;B, blending slower tempos, layered vocals, and intimate songwriting with a confident presence. Deric builds records around melody-first writing and emotional transparency, creating songs that feel personal while remaining commercially focused.</p>
-          <p>With consistent output, proven traction, and a distinct visual language, Deric is building a cohesive artist world designed for both audience connection and industry scalability.</p>
+          <div class="bio-header">
+            <p class="bio-name">DERIC</p>
+            <p class="bio-subline">Atlanta | R&amp;B • Melodic Hip Hop • Pluggnb</p>
+          </div>
         </div>
       </div>
     </section>
@@ -429,10 +470,47 @@
 
     const bioParagraphs = byId("bioParagraphs");
     bioParagraphs.innerHTML = "";
-    epkData.bio.forEach((paragraph) => {
-      const p = document.createElement("p");
-      p.textContent = paragraph;
-      bioParagraphs.appendChild(p);
+
+    const bioHeader = document.createElement("div");
+    bioHeader.className = "bio-header";
+
+    const bioName = document.createElement("p");
+    bioName.className = "bio-name";
+    bioName.textContent = epkData.bio.name;
+
+    const bioSubline = document.createElement("p");
+    bioSubline.className = "bio-subline";
+    bioSubline.textContent = epkData.bio.subline;
+
+    bioHeader.appendChild(bioName);
+    bioHeader.appendChild(bioSubline);
+    bioParagraphs.appendChild(bioHeader);
+
+    epkData.bio.sections.forEach((section) => {
+      const sectionWrap = document.createElement("section");
+      sectionWrap.className = "bio-section";
+
+      const heading = document.createElement("h3");
+      heading.textContent = section.heading;
+      sectionWrap.appendChild(heading);
+
+      const textGroup = document.createElement("div");
+      textGroup.className = "bio-lines";
+
+      (section.paragraphs ?? []).forEach((paragraph) => {
+        const p = document.createElement("p");
+        p.textContent = paragraph;
+        textGroup.appendChild(p);
+      });
+
+      (section.lines ?? []).forEach((line) => {
+        const p = document.createElement("p");
+        p.textContent = line;
+        textGroup.appendChild(p);
+      });
+
+      sectionWrap.appendChild(textGroup);
+      bioParagraphs.appendChild(sectionWrap);
     });
 
     const highlightsGrid = byId("highlightsGrid");
