@@ -137,10 +137,10 @@
     }
 
     .tagline {
-      color: #d6d6d6;
-      font-size: 0.96rem;
-      letter-spacing: 0.02em;
-      font-style: italic;
+      color: #d2d2d2;
+      font-size: 1rem;
+      letter-spacing: 0;
+      font-style: normal;
     }
 
     .bio {
@@ -150,7 +150,6 @@
     }
 
     .highlights-grid,
-    .services-grid,
     .gallery-grid {
       display: grid;
       gap: 1rem;
@@ -252,25 +251,18 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
-    .identity,
-    .service {
+    .identity {
       border: 1px solid var(--line);
       border-radius: 12px;
       padding: 1rem;
       background: rgba(255, 255, 255, 0.015);
     }
 
-    .identity h3,
-    .service h3 {
+    .identity h3 {
       font-size: 1rem;
       font-weight: 650;
       letter-spacing: 0.01em;
       margin-bottom: 0.35rem;
-    }
-
-    .services-grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      max-width: 860px;
     }
 
     .contact {
@@ -307,8 +299,7 @@
 
       .embeds,
       .visuals,
-      .identities,
-      .services-grid {
+      .identities {
         grid-template-columns: 1fr;
       }
     }
@@ -402,55 +393,6 @@
       </div>
     </section>
 
-    <section id="world">
-      <div class="wrap world-copy">
-        <h2>Artistic World</h2>
-        <p id="worldSummary">Deric’s creative universe is built through layered personas that rotate across songs, visuals, and brand direction — giving each release a distinct emotional lens while keeping the core identity cohesive.</p>
-        <div class="identities" id="identitiesGrid">
-          <article class="identity">
-            <h3>Melody Baby</h3>
-            <p>Emotional melody architect focused on intimacy, vulnerability, and vocal texture.</p>
-          </article>
-          <article class="identity">
-            <h3>Lovechild</h3>
-            <p>Nostalgic storyteller translating memories, heartbreak, and hope into modern records.</p>
-          </article>
-          <article class="identity">
-            <h3>Deric Don</h3>
-            <p>Independent boss presence balancing creative control with strategic execution.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="services">
-      <div class="wrap">
-        <h2>Services / Business</h2>
-        <div class="services-grid" id="servicesGrid">
-          <article class="service">
-            <h3>Songwriting</h3>
-            <p>Melody-forward songwriting for artists seeking emotionally resonant, commercially viable records.</p>
-          </article>
-          <article class="service">
-            <h3>Vocal Features</h3>
-            <p>Selective feature placements aligned with premium R&amp;B and melodic hip-hop aesthetics.</p>
-          </article>
-          <article class="service">
-            <h3>Custom Songs</h3>
-            <p>Tailored songs built around your concept, brand direction, and release goals.</p>
-          </article>
-          <article class="service">
-            <h3>Creative Collaborations</h3>
-            <p>Cross-disciplinary collaborations spanning music, visual campaigns, and live concepts.</p>
-          </article>
-          <article class="service">
-            <h3>Vocal Presets</h3>
-            <p>Brand-aligned digital vocal products engineered for clean, emotional modern R&amp;B delivery.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
     <section id="contact">
       <div class="wrap contact">
         <h2>Booking &amp; Business Inquiries</h2>
@@ -481,7 +423,7 @@
     artistName.textContent = epkData.hero.name;
     artistRole.textContent = epkData.hero.role;
     heroSubheading.textContent = epkData.hero.subheading;
-    heroTagline.textContent = `“${epkData.hero.tagline}”`;
+    heroTagline.textContent = epkData.hero.tagline;
     heroMedia.style.setProperty("--hero-image", `url('${epkData.hero.heroImage}')`);
     footerText.textContent = `${epkData.hero.name} — Electronic Press Kit`;
 
@@ -542,42 +484,6 @@
 
       figure.appendChild(img);
       galleryGrid.appendChild(figure);
-    });
-
-    byId("worldSummary").textContent = epkData.artisticWorld.summary;
-
-    const identitiesGrid = byId("identitiesGrid");
-    identitiesGrid.innerHTML = "";
-    epkData.artisticWorld.personas.forEach((persona) => {
-      const card = document.createElement("article");
-      card.className = "identity";
-
-      const title = document.createElement("h3");
-      title.textContent = persona.name;
-
-      const description = document.createElement("p");
-      description.textContent = persona.description;
-
-      card.appendChild(title);
-      card.appendChild(description);
-      identitiesGrid.appendChild(card);
-    });
-
-    const servicesGrid = byId("servicesGrid");
-    servicesGrid.innerHTML = "";
-    epkData.services.forEach((service) => {
-      const card = document.createElement("article");
-      card.className = "service";
-
-      const title = document.createElement("h3");
-      title.textContent = service.title;
-
-      const description = document.createElement("p");
-      description.textContent = service.description;
-
-      card.appendChild(title);
-      card.appendChild(description);
-      servicesGrid.appendChild(card);
     });
 
     const emailLink = byId("emailLink");

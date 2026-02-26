@@ -1,15 +1,16 @@
 export const epkData = {
   hero: {
     name: "DERIC",
-    role: "Independent R&B Artist",
-    subheading: "Emotionally cinematic, melody-driven R&B rooted in vulnerability and confidence.",
-    tagline: "The melodic voice of modern R&B — emotion first, industry ready.",
-    heroImage: "https://images.unsplash.com/photo-1516280030429-27679b3dc9cf?auto=format&fit=crop&w=1800&q=80"
+    role: "Independent R&B and Melodic Hip Hop Artist",
+    subheading: "Independent artist blending modern R&B and melodic hip hop through melody first songwriting and emotional clarity.",
+    tagline: "Built for long term growth and real audience connection.",
+    heroImage: "./assets/gallery/deric-gallery-10.png"
   },
   bio: [
-    "Deric is an Atlanta-based independent R&B artist with more than 20M total streams and over 200 verified credits across writing, performance, and collaborative releases. Formerly signed and now fully independent, he operates with a clear creative and business framework built for long-term growth.",
-    "His sound evolved from Plug&B roots into elevated modern R&B, blending slower tempos, layered vocals, and intimate songwriting with a confident presence. Deric builds records around melody-first writing and emotional transparency, creating songs that feel personal while remaining commercially focused.",
-    "With consistent output, proven traction, and a distinct visual language, Deric is building a cohesive artist world designed for both audience connection and industry scalability."
+    "Deric is an Atlanta based independent artist blending modern R&B, melodic hip hop, and pluggnb influences into emotionally driven, melody first records. With over 20 million total streams and more than 200 verified credits across writing and performance, he operates with both creative depth and industry ready execution.",
+    "His breakout record “Go Anthem” has surpassed 2.2 million streams on Spotify, with the official audio and video collectively earning over 250K views on YouTube. His collaboration “Last Forever” with iayze has generated over 560K Spotify streams, expanding his reach within the melodic rap and pluggnb space. Additional records like “Tell Me If It’s Real” continue to reinforce his ability to deliver emotionally resonant music with measurable traction.",
+    "Currently averaging over 40K monthly listeners on Spotify, Deric has evolved from his early pluggnb roots into a more elevated R&B direction, pairing slower tempos, layered vocals, and intimate storytelling with confident presence. His sound lives at the intersection of vulnerability and control, built around melody first songwriting and honest emotional transparency.",
+    "More than chasing trends, Deric is building a scalable artist brand by combining consistent output, visual cohesion, and independent ownership to position himself for long term growth across both R&B and melodic hip hop markets."
   ],
   highlights: [
     "20M+ Total Streams",
@@ -21,7 +22,7 @@ export const epkData = {
   ],
   music: {
     projectTitle: "Mood Swings & Melodies Vol. 3",
-    projectDescription: "A 5–6 track EP marking the transition into elevated R&B — slower tempos, layered melodies, vulnerable storytelling, and the duality of pain and confidence.",
+    projectDescription: "A 4 song EP marking the transition into elevated R&B, built around slower tempos, layered melodies, vulnerable storytelling, and the balance between pain and confidence.",
     spotifyEmbed: "https://open.spotify.com/embed/album/1iQduM0gfK4kNMISrSrwIR",
     appleEmbed: "https://embed.music.apple.com/us/album/mood-swings-melodies-iii-ep/1871631282",
     appleEmbedHeight: 450,
@@ -55,47 +56,8 @@ export const epkData = {
       alt: "Deric portrait in black crewneck with flash"
     }
   ],
-  artisticWorld: {
-    summary: "Deric’s creative universe is built through layered personas that rotate across songs, visuals, and brand direction — giving each release a distinct emotional lens while keeping the core identity cohesive.",
-    personas: [
-      {
-        name: "Melody Baby",
-        description: "Emotional melody architect focused on intimacy, vulnerability, and vocal texture."
-      },
-      {
-        name: "Lovechild",
-        description: "Nostalgic storyteller translating memories, heartbreak, and hope into modern records."
-      },
-      {
-        name: "Deric Don",
-        description: "Independent boss presence balancing creative control with strategic execution."
-      }
-    ]
-  },
-  services: [
-    {
-      title: "Songwriting",
-      description: "Melody-forward songwriting for artists seeking emotionally resonant, commercially viable records."
-    },
-    {
-      title: "Vocal Features",
-      description: "Selective feature placements aligned with premium R&B and melodic hip-hop aesthetics."
-    },
-    {
-      title: "Custom Songs",
-      description: "Tailored songs built around your concept, brand direction, and release goals."
-    },
-    {
-      title: "Creative Collaborations",
-      description: "Cross-disciplinary collaborations spanning music, visual campaigns, and live concepts."
-    },
-    {
-      title: "Vocal Presets",
-      description: "Brand-aligned digital vocal products engineered for clean, emotional modern R&B delivery."
-    }
-  ],
   contact: {
-    email: "business@dericmusic.com",
+    email: "musicderic@gmail.com",
     location: "Atlanta, GA",
     instagramUrl: "https://instagram.com/envyderic",
     instagramHandle: "@envyderic"
