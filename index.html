@@ -903,33 +903,75 @@
 
     function buildZip(files) {
       const enc = new TextEncoder();
-      function crc32(buf) {
+
+      function crc32(data) {
         const t = new Uint32Array(256);
-        for (let i = 0; i < 256; i++) { let c = i; for (let j = 0; j < 8; j++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[i] = c; }
+        for (let i = 0; i < 256; i++) {
+          let c = i;
+          for (let j = 0; j < 8; j++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+          t[i] = c;
+        }
         let crc = 0xFFFFFFFF;
-        const u = new Uint8Array(buf);
-        for (let i = 0; i < u.length; i++) crc = (crc >>> 8) ^ t[(crc ^ u[i]) & 0xFF];
+        for (let i = 0; i < data.length; i++) crc = (crc >>> 8) ^ t[(crc ^ data[i]) & 0xFF];
         return (crc ^ 0xFFFFFFFF) >>> 0;
       }
-      const u16 = n => [n & 0xFF, (n >> 8) & 0xFF];
-      const u32 = n => [n & 0xFF, (n >> 8) & 0xFF, (n >> 16) & 0xFF, (n >> 24) & 0xFF];
+
+      function concat(parts) {
+        const out = new Uint8Array(parts.reduce((s, p) => s + p.length, 0));
+        let pos = 0;
+        for (const p of parts) { out.set(p, pos); pos += p.length; }
+        return out;
+      }
+
+      const w16 = n => new Uint8Array([n & 0xFF, (n >> 8) & 0xFF]);
+      const w32 = n => new Uint8Array([n & 0xFF, (n >> 8) & 0xFF, (n >> 16) & 0xFF, (n >> 24) & 0xFF]);
+
       const locals = [], centrals = [];
       let off = 0;
+
       for (const { name, buffer } of files) {
         const data = new Uint8Array(buffer);
         const nb = enc.encode(name);
-        const crc = crc32(buffer);
+        const crc = crc32(data);
         const sz = data.length;
-        const loc = new Uint8Array([0x50,0x4B,0x03,0x04,20,0,0,0,0,0,0,0,0,0,...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),0,0,...nb,...data]);
-        const cen = new Uint8Array([0x50,0x4B,0x01,0x02,20,0,20,0,0,0,0,0,0,0,0,0,...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),0,0,0,0,0,0,0,0,0,0,0,0,...u32(off),...nb]);
-        locals.push(loc); centrals.push(cen); off += loc.length;
+
+        const hdr = concat([
+          new Uint8Array([0x50,0x4B,0x03,0x04]),
+          w16(20), w16(0), w16(0),
+          w16(0), w16(0),
+          w32(crc), w32(sz), w32(sz),
+          w16(nb.length), w16(0),
+          nb
+        ]);
+        const loc = concat([hdr, data]);
+
+        const cen = concat([
+          new Uint8Array([0x50,0x4B,0x01,0x02]),
+          w16(20), w16(20),
+          w16(0), w16(0),
+          w16(0), w16(0),
+          w32(crc), w32(sz), w32(sz),
+          w16(nb.length), w16(0), w16(0),
+          w16(0), w16(0), w32(0),
+          w32(off),
+          nb
+        ]);
+
+        locals.push(loc);
+        centrals.push(cen);
+        off += loc.length;
       }
-      const cdSz = centrals.reduce((s, c) => s + c.length, 0);
-      const eocd = new Uint8Array([0x50,0x4B,0x05,0x06,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdSz),...u32(off),0,0]);
-      const all = [...locals, ...centrals, eocd];
-      const out = new Uint8Array(all.reduce((s, p) => s + p.length, 0));
-      let pos = 0; for (const p of all) { out.set(p, pos); pos += p.length; }
-      return new Blob([out], { type: "application/zip" });
+
+      const cdData = concat(centrals);
+      const eocd = concat([
+        new Uint8Array([0x50,0x4B,0x05,0x06]),
+        w16(0), w16(0),
+        w16(files.length), w16(files.length),
+        w32(cdData.length), w32(off),
+        w16(0)
+      ]);
+
+      return new Blob([...locals, cdData, eocd], { type: "application/zip" });
     }
 
     byId("downloadAllBtn").addEventListener("click", async () => {
@@ -937,10 +979,14 @@
       btn.textContent = "Zipping\u2026";
       btn.disabled = true;
       try {
-        const files = await Promise.all(pressPhotos.map(async (photo) => ({
-          name: "deric-press-" + photo.src.split("/").pop(),
-          buffer: await fetch(photo.src).then((r) => r.arrayBuffer())
-        })));
+        const files = await Promise.all(pressPhotos.map(async (photo) => {
+          const res = await fetch(photo.src, { credentials: "same-origin" });
+          if (!res.ok) throw new Error("Failed to fetch " + photo.src);
+          return {
+            name: "deric-press-" + photo.src.split("/").pop(),
+            buffer: await res.arrayBuffer()
+          };
+        }));
         const url = URL.createObjectURL(buildZip(files));
         const a = document.createElement("a");
         a.href = url;
@@ -949,7 +995,8 @@
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-      } catch {
+      } catch (err) {
+        console.error("Download All failed:", err);
         alert("Download failed — please try again.");
       } finally {
         btn.textContent = "\u2193 Download All";
