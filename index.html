@@ -680,7 +680,6 @@
       DERIC — Electronic Press Kit
     </div>
   </footer>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHveXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./epk-data.js"></script>
   <script>
     const epkData = window.epkData;
@@ -902,20 +901,47 @@
       galleryGrid.appendChild(figure);
     });
 
+    function buildZip(files) {
+      const enc = new TextEncoder();
+      function crc32(buf) {
+        const t = new Uint32Array(256);
+        for (let i = 0; i < 256; i++) { let c = i; for (let j = 0; j < 8; j++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1; t[i] = c; }
+        let crc = 0xFFFFFFFF;
+        const u = new Uint8Array(buf);
+        for (let i = 0; i < u.length; i++) crc = (crc >>> 8) ^ t[(crc ^ u[i]) & 0xFF];
+        return (crc ^ 0xFFFFFFFF) >>> 0;
+      }
+      const u16 = n => [n & 0xFF, (n >> 8) & 0xFF];
+      const u32 = n => [n & 0xFF, (n >> 8) & 0xFF, (n >> 16) & 0xFF, (n >> 24) & 0xFF];
+      const locals = [], centrals = [];
+      let off = 0;
+      for (const { name, buffer } of files) {
+        const data = new Uint8Array(buffer);
+        const nb = enc.encode(name);
+        const crc = crc32(buffer);
+        const sz = data.length;
+        const loc = new Uint8Array([0x50,0x4B,0x03,0x04,20,0,0,0,0,0,0,0,0,0,...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),0,0,...nb,...data]);
+        const cen = new Uint8Array([0x50,0x4B,0x01,0x02,20,0,20,0,0,0,0,0,0,0,0,0,...u32(crc),...u32(sz),...u32(sz),...u16(nb.length),0,0,0,0,0,0,0,0,0,0,0,0,...u32(off),...nb]);
+        locals.push(loc); centrals.push(cen); off += loc.length;
+      }
+      const cdSz = centrals.reduce((s, c) => s + c.length, 0);
+      const eocd = new Uint8Array([0x50,0x4B,0x05,0x06,0,0,0,0,...u16(files.length),...u16(files.length),...u32(cdSz),...u32(off),0,0]);
+      const all = [...locals, ...centrals, eocd];
+      const out = new Uint8Array(all.reduce((s, p) => s + p.length, 0));
+      let pos = 0; for (const p of all) { out.set(p, pos); pos += p.length; }
+      return new Blob([out], { type: "application/zip" });
+    }
+
     byId("downloadAllBtn").addEventListener("click", async () => {
       const btn = byId("downloadAllBtn");
       btn.textContent = "Zipping\u2026";
       btn.disabled = true;
-
       try {
-        const zip = new JSZip();
-        await Promise.all(pressPhotos.map(async (photo) => {
-          const res = await fetch(photo.src);
-          const blob = await res.blob();
-          zip.file("deric-press-" + photo.src.split("/").pop(), blob);
-        }));
-        const zipBlob = await zip.generateAsync({ type: "blob" });
-        const url = URL.createObjectURL(zipBlob);
+        const files = await Promise.all(pressPhotos.map(async (photo) => ({
+          name: "deric-press-" + photo.src.split("/").pop(),
+          buffer: await fetch(photo.src).then((r) => r.arrayBuffer())
+        })));
+        const url = URL.createObjectURL(buildZip(files));
         const a = document.createElement("a");
         a.href = url;
         a.download = "deric-press-photos.zip";
