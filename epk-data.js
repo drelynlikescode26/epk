@@ -8,31 +8,36 @@ window.epkData = {
   },
   bio: {
     name: "DERIC",
-    subline: "Atlanta | R&B • Melodic Hip Hop • Pluggnb",
+    location: "Atlanta, GA",
+    tags: ["R&B", "Melodic Hip-Hop", "Pluggnb"],
     sections: [
       {
+        type: "lead",
         heading: "The Sound",
         paragraphs: [
           "Deric is an Atlanta-based independent artist defining a new intersection of modern R&B and melodic hip hop. Built on a foundation of melody-first songwriting, his music balances the raw vulnerability of early pluggnb with the polished execution of elevated R&B. His current direction pairs slower tempos and layered vocals with intimate, honest storytelling."
         ]
       },
       {
+        type: "stats",
         heading: "By The Numbers",
-        lines: [
-          "Total Streams: 20M+ across all platforms.",
-          "Monthly Listeners: 40K+ on Spotify.",
-          "Industry Credits: 200+ verified writing and performance credits."
+        stats: [
+          { number: "20M+", label: "Total Streams" },
+          { number: "40K+", label: "Monthly Listeners" },
+          { number: "200+", label: "Verified Credits" }
         ]
       },
       {
+        type: "releases",
         heading: "Key Releases",
-        lines: [
-          "Go Anthem: The breakout single with 2.2M+ Spotify streams and 250K+ combined YouTube views.",
-          "Last Forever (ft. iayze): A core melodic rap collaboration with over 560K streams.",
-          "Tell Me If It’s Real: A standout track reinforcing his traction in the R&B space."
+        releases: [
+          { name: "Go Anthem", detail: "2.2M+ Spotify streams · 250K+ YouTube views" },
+          { name: "Last Forever", credit: "ft. iayze", detail: "560K+ streams" },
+          { name: "Tell Me If It's Real", detail: "R&B standout" }
         ]
       },
       {
+        type: "close",
         heading: "The Brand & Vision",
         paragraphs: [
           "More than just a performer, Deric operates as a founder and owner of his brand. By prioritizing visual cohesion, consistent output, and independent ownership, he is positioned for long-term scalability. His evolution from pluggnb roots into a sophisticated R&B sound marks a move toward a more mature, permanent fixture in the melodic market."
@@ -59,30 +64,12 @@ window.epkData = {
     ]
   },
   gallery: [
-    {
-      src: "./assets/gallery/deric-gallery-1.jpg",
-      alt: "Deric standing on city overlook at dusk"
-    },
-    {
-      src: "./assets/gallery/deric-gallery-4.jpg",
-      alt: "Deric close-up in bedroom scene with soft flash"
-    },
-    {
-      src: "./assets/gallery/deric-gallery-5.jpg",
-      alt: "Deric portrait in bedroom with moody composition"
-    },
-    {
-      src: "./assets/gallery/deric-gallery-6.jpg",
-      alt: "Deric in red mesh styling with chain heart visual"
-    },
-    {
-      src: "./assets/gallery/deric-gallery-7.jpg",
-      alt: "Deric floor portrait with cash and warm tones"
-    },
-    {
-      src: "./assets/gallery/deric-gallery-8.jpg",
-      alt: "Deric portrait in black crewneck with flash"
-    }
+    { src: "./assets/gallery/deric-gallery-1.jpg", alt: "Deric standing on city overlook at dusk", press: true },
+    { src: "./assets/gallery/deric-gallery-4.jpg", alt: "Deric close-up in bedroom scene with soft flash", press: true },
+    { src: "./assets/gallery/deric-gallery-5.jpg", alt: "Deric portrait in bedroom with moody composition", press: true },
+    { src: "./assets/gallery/deric-gallery-6.jpg", alt: "Deric in red mesh styling with chain heart visual", press: true },
+    { src: "./assets/gallery/deric-gallery-7.jpg", alt: "Deric floor portrait with cash and warm tones", press: true },
+    { src: "./assets/gallery/deric-gallery-8.jpg", alt: "Deric portrait in black crewneck with flash", press: true }
   ],
   contact: {
     email: "musicderic@gmail.com",
