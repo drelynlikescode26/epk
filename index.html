@@ -544,6 +544,104 @@
       font-size: 0.9rem;
     }
 
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(0, 0, 0, 0.94);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .lightbox.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .lb-img-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 3.5rem 5rem;
+      min-height: 0;
+      width: 100%;
+    }
+
+    .lb-img-wrap img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      border-radius: 6px;
+      user-select: none;
+      transition: opacity 0.15s ease;
+    }
+
+    .lb-close {
+      position: absolute;
+      top: 1.2rem;
+      right: 1.4rem;
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 2rem;
+      line-height: 1;
+      padding: 0.3rem 0.6rem;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.15s;
+      z-index: 2;
+    }
+
+    .lb-close:hover { opacity: 1; }
+
+    .lb-nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      color: #fff;
+      font-size: 1.2rem;
+      width: 3rem;
+      height: 3rem;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      z-index: 2;
+    }
+
+    .lb-nav:hover { background: rgba(255, 255, 255, 0.18); }
+    .lb-prev { left: 1.2rem; }
+    .lb-next { right: 1.2rem; }
+
+    .lb-footer {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      padding: 0.8rem 1.5rem 1.6rem;
+    }
+
+    .lb-counter {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.45);
+      letter-spacing: 0.1em;
+      font-weight: 500;
+    }
+
+    @media (max-width: 640px) {
+      .lb-nav { display: none; }
+      .lb-img-wrap { padding: 3.5rem 1rem; }
+    }
+
     @media (max-width: 1000px) {
       .highlights-grid,
       .gallery-grid {
@@ -674,6 +772,19 @@
       </div>
     </section>
   </main>
+
+  <div id="lightbox" class="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer">
+    <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8592;</button>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8594;</button>
+    <div class="lb-img-wrap">
+      <img id="lbImg" src="" alt="">
+    </div>
+    <div class="lb-footer">
+      <span id="lbCounter" class="lb-counter"></span>
+      <button id="lbDownload" class="btn-press-dl">&#8595; Download</button>
+    </div>
+  </div>
 
   <footer>
     <div class="wrap" id="footerText">
@@ -866,9 +977,11 @@
 
     const galleryGrid = byId("galleryGrid");
     galleryGrid.innerHTML = "";
-    epkData.gallery.forEach((photo) => {
+    epkData.gallery.forEach((photo, index) => {
       const figure = document.createElement("figure");
       figure.className = "gallery-item";
+      figure.style.cursor = "pointer";
+      figure.addEventListener("click", () => lbOpen(index));
 
       const img = document.createElement("img");
       img.src = photo.src;
@@ -1023,6 +1136,55 @@
     const instagramLink = byId("instagramLink");
     instagramLink.href = epkData.contact.instagramUrl;
     instagramLink.textContent = epkData.contact.instagramHandle;
+
+    // Lightbox
+    const lbPhotos = epkData.gallery;
+    let lbIndex = 0;
+
+    function lbOpen(index) {
+      lbIndex = index;
+      lbRender();
+      const lb = byId("lightbox");
+      lb.classList.add("open");
+      document.body.style.overflow = "hidden";
+    }
+
+    function lbClose() {
+      byId("lightbox").classList.remove("open");
+      document.body.style.overflow = "";
+    }
+
+    function lbRender() {
+      const photo = lbPhotos[lbIndex];
+      const img = byId("lbImg");
+      img.style.opacity = "0";
+      img.onload = () => { img.style.opacity = "1"; };
+      img.src = photo.src;
+      img.alt = photo.alt;
+      byId("lbCounter").textContent = (lbIndex + 1) + " / " + lbPhotos.length;
+      const dlBtn = byId("lbDownload");
+      if (photo.press) {
+        dlBtn.style.display = "";
+        dlBtn.onclick = (e) => {
+          e.stopPropagation();
+          downloadImage(photo.src, "deric-press-" + photo.src.split("/").pop());
+        };
+      } else {
+        dlBtn.style.display = "none";
+      }
+    }
+
+    byId("lbClose").addEventListener("click", lbClose);
+    byId("lbPrev").addEventListener("click", () => { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; lbRender(); });
+    byId("lbNext").addEventListener("click", () => { lbIndex = (lbIndex + 1) % lbPhotos.length; lbRender(); });
+    byId("lightbox").addEventListener("click", (e) => { if (e.target === e.currentTarget) lbClose(); });
+
+    document.addEventListener("keydown", (e) => {
+      if (!byId("lightbox").classList.contains("open")) return;
+      if (e.key === "Escape") lbClose();
+      if (e.key === "ArrowLeft") { lbIndex = (lbIndex - 1 + lbPhotos.length) % lbPhotos.length; lbRender(); }
+      if (e.key === "ArrowRight") { lbIndex = (lbIndex + 1) % lbPhotos.length; lbRender(); }
+    });
   </script>
 </body>
 </html>
