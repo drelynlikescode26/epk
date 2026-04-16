@@ -976,18 +976,29 @@
 
     byId("downloadAllBtn").addEventListener("click", async () => {
       const btn = byId("downloadAllBtn");
-      btn.textContent = "Zipping\u2026";
+      const photoCount = pressPhotos.length;
+
+      if (photoCount === 0) {
+        alert("Debug: pressPhotos is empty. Gallery has " + epkData.gallery.length + " items. press:true count: " + epkData.gallery.filter(p => p.press).length);
+        return;
+      }
+
+      btn.textContent = "Fetching " + photoCount + " photos\u2026";
       btn.disabled = true;
+
       try {
         const files = await Promise.all(pressPhotos.map(async (photo) => {
-          const res = await fetch(photo.src, { credentials: "same-origin" });
-          if (!res.ok) throw new Error("Failed to fetch " + photo.src);
-          return {
-            name: "deric-press-" + photo.src.split("/").pop(),
-            buffer: await res.arrayBuffer()
-          };
+          const res = await fetch(photo.src);
+          if (!res.ok) throw new Error("HTTP " + res.status + " for " + photo.src);
+          const buffer = await res.arrayBuffer();
+          return { name: "deric-press-" + photo.src.split("/").pop(), buffer };
         }));
-        const url = URL.createObjectURL(buildZip(files));
+
+        const totalMB = (files.reduce((s, f) => s + f.buffer.byteLength, 0) / 1024 / 1024).toFixed(1);
+        btn.textContent = "Zipping " + totalMB + "MB\u2026";
+
+        const zipBlob = buildZip(files);
+        const url = URL.createObjectURL(zipBlob);
         const a = document.createElement("a");
         a.href = url;
         a.download = "deric-press-photos.zip";
@@ -996,8 +1007,7 @@
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
       } catch (err) {
-        console.error("Download All failed:", err);
-        alert("Download failed — please try again.");
+        alert("Download failed: " + err.message);
       } finally {
         btn.textContent = "\u2193 Download All";
         btn.disabled = false;
