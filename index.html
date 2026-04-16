@@ -680,6 +680,7 @@
       DERIC — Electronic Press Kit
     </div>
   </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js" integrity="sha512-XMVd28F1oH/O71fzwBnV7HucLxVwtxf26XV8P4wPk26EDxuGZ91N8bsOttmnomcCD3CS5ZMRL50H0GgOHveXg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="./epk-data.js"></script>
   <script>
     const epkData = window.epkData;
@@ -901,13 +902,33 @@
       galleryGrid.appendChild(figure);
     });
 
-    byId("downloadAllBtn").addEventListener("click", () => {
-      pressPhotos.forEach((photo, i) => {
-        setTimeout(() => {
-          const filename = "deric-press-" + photo.src.split("/").pop();
-          downloadImage(photo.src, filename);
-        }, i * 400);
-      });
+    byId("downloadAllBtn").addEventListener("click", async () => {
+      const btn = byId("downloadAllBtn");
+      btn.textContent = "Zipping\u2026";
+      btn.disabled = true;
+
+      try {
+        const zip = new JSZip();
+        await Promise.all(pressPhotos.map(async (photo) => {
+          const res = await fetch(photo.src);
+          const blob = await res.blob();
+          zip.file("deric-press-" + photo.src.split("/").pop(), blob);
+        }));
+        const zipBlob = await zip.generateAsync({ type: "blob" });
+        const url = URL.createObjectURL(zipBlob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = "deric-press-photos.zip";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+      } catch {
+        alert("Download failed — please try again.");
+      } finally {
+        btn.textContent = "\u2193 Download All";
+        btn.disabled = false;
+      }
     });
 
     const emailLink = byId("emailLink");
